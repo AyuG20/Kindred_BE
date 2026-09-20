@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import cookieParser from "cookie-parser";
 import authRoutes from './Backend/Routes/auth.routes.js';
 import interestRoutes from './Backend/Routes/interest.routes.js';
+import discoverRoutes from './Backend/Routes/discovery.routes.js';
+import connectionRoutes from './Backend/Routes/connection.routes.js'
 import { connectDB, disconnectDB } from './Backend/db/db.js';
 
 dotenv.config();
@@ -14,7 +16,7 @@ const app = express();
 const port = process.env.PORT || 3002;
 const corsOptions = {
   origin: 'http://localhost:5173',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
 };
@@ -32,6 +34,8 @@ app.use((req, res, next) => {
 });
 app.use('/api/auth', authRoutes);
 app.use('/api/interests', interestRoutes);
+app.use('/api/discover',discoverRoutes);
+app.use('/api/connection',connectionRoutes);
 
 async function startServer() {
   await connectDB();

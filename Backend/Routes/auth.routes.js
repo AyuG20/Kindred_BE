@@ -1,5 +1,5 @@
 import express from 'express';
-import { registerController, loginController, updateProfileController } from '../Controller/auth.controller.js';
+import { registerController, loginController, updateProfileController, getCurrentUserController } from '../Controller/auth.controller.js';
 import { authenticateToken } from '../Middleware/authMiddleware.js';
 import { upload } from '../Middleware/multerMiddleware.js';
 
@@ -15,4 +15,7 @@ router.put(
   upload.single("profilePicture"),
   updateProfileController
 );
+
+router.get("/me", authenticateToken, getCurrentUserController);
+
 export default router;
