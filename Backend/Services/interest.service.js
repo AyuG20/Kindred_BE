@@ -14,11 +14,14 @@ export async function createInterest(payload) {
 }
 
 export async function listInterests() {
-  return InterestModel.find().sort({ category: 1, name: 1 });
+  return InterestModel
+    .find()
+    .select("name category emoji")
+    .sort({ category: 1, name: 1 });
 }
 
 export async function getUserInterests(userId) {
-  const user = await UserModel.findById(userId).populate({ path: 'interests', select: 'name category' });
+  const user = await UserModel.findById(userId).populate({ path: 'interests', select: '_id name category' });
   if (!user) {
     throw new Error('User not found');
   }

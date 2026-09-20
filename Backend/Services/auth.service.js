@@ -132,3 +132,13 @@ export async function updateProfile(userId, file, bio, location) {
     onboardingStatus: user.onboardingStatus,
   };
 }
+
+export async function getCurrentUser(userId) {
+  const user = await UserModel.findById(userId).select("-password");
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  return user;
+}

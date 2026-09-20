@@ -1,4 +1,4 @@
-import { loginUser, registerUser, updateProfile} from "../Services/auth.service.js";
+import { loginUser, registerUser, updateProfile, getCurrentUser} from "../Services/auth.service.js";
 
 
 export async function registerController(req, res) {
@@ -67,6 +67,24 @@ export async function updateProfileController(req, res) {
     });
   } catch (error) {
     return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
+
+
+export async function getCurrentUserController(req, res) {
+  try {
+    const userId = req.user.id;
+    const user = await getCurrentUser(userId);
+    return res.status(200).json({
+      success: true,
+      message: "User profile retrieved successfully",
+      user: user,
+    });
+  } catch (error) {
+    return res.status(404).json({
       success: false,
       message: error.message,
     });
